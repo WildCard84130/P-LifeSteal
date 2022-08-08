@@ -2,7 +2,7 @@ package eu.vibemc.lifesteal.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import eu.vibemc.lifesteal.Main;
-import eu.vibemc.lifesteal.bans.BanStorageUtil;
+import eu.vibemc.lifesteal.bans.BanLocalUtil;
 import eu.vibemc.lifesteal.other.Config;
 import eu.vibemc.lifesteal.other.Debug;
 import eu.vibemc.lifesteal.other.Items;
@@ -99,7 +99,7 @@ public class MainCommands {
                                 player.updateInventory();
                                 player.sendMessage(Config.getMessage("heartWithdrawn"));
                                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 100, 1);
-                                BanStorageUtil.createBan(player);
+                                BanLocalUtil.createLocalBan(player);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

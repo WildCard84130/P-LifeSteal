@@ -3,21 +3,27 @@ package eu.vibemc.lifesteal;
 import com.samjakob.spigui.SpiGUI;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIConfig;
-import eu.vibemc.lifesteal.bans.BanStorageUtil;
+import eu.vibemc.lifesteal.bans.BanLocalUtil;
 import eu.vibemc.lifesteal.events.*;
-import eu.vibemc.lifesteal.other.*;
+import eu.vibemc.lifesteal.mysql.MySQL;
+import eu.vibemc.lifesteal.other.Config;
+import eu.vibemc.lifesteal.other.LootPopulator;
+import eu.vibemc.lifesteal.other.Metrics;
+import eu.vibemc.lifesteal.other.UpdateChecker;
 import eu.vibemc.lifesteal.other.expansions.LSExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import static eu.vibemc.lifesteal.commands.CommandsManager.loadCommands;
 import static eu.vibemc.lifesteal.other.Items.Recipes.registerRecipes;
 import static eu.vibemc.lifesteal.other.Items.Recipes.unregisterRecipes;
 
 public final class Main extends JavaPlugin {
+
 
     public static SpiGUI spiGUI;
     private static Main instance;
@@ -30,10 +36,18 @@ public final class Main extends JavaPlugin {
     public void onLoad() {
         Main.instance = this;
         CommandAPI.onLoad(new CommandAPIConfig().silentLogs(false));
-        try {
-            BanStorageUtil.loadBans();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (Config.getString("storage-type").equalsIgnoreCase("mysql")) {
+            try {
+                MySQL.setup();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                BanLocalUtil.loadLocalBans();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         loadCommands();
     }

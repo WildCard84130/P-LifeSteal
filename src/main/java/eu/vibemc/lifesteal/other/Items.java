@@ -3,7 +3,7 @@ package eu.vibemc.lifesteal.other;
 import com.samjakob.spigui.SGMenu;
 import com.samjakob.spigui.buttons.SGButton;
 import eu.vibemc.lifesteal.Main;
-import eu.vibemc.lifesteal.bans.BanStorageUtil;
+import eu.vibemc.lifesteal.bans.BanLocalUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -49,7 +49,7 @@ public class Items {
                 return;
             }
             final SGMenu menu = Main.spiGUI.create(ChatColor.translateAlternateColorCodes('&', Config.getString("reviveBook.inventory-title")), 5);
-            BanStorageUtil.findAllBans().forEach(ban -> {
+            BanLocalUtil.findAllLocalBans().forEach(ban -> {
                 OfflinePlayer bannedPlayer = Bukkit.getOfflinePlayer(ban.getPlayerUUID());
                 ItemStack bannedPlayerSkull = new ItemStack(Material.PLAYER_HEAD);
                 bannedPlayerSkull.setAmount(1);
@@ -69,7 +69,7 @@ public class Items {
                     ItemStack clickedItem = e.getCurrentItem();
                     OfflinePlayer target = Main.getInstance().getServer().getOfflinePlayer(clickedItem.getItemMeta().getDisplayName().substring(4));
                     try {
-                        if (BanStorageUtil.deleteBan(target.getUniqueId())) {
+                        if (BanLocalUtil.deleteLocalBan(target.getUniqueId())) {
                             player.sendMessage(Config.getMessage("playerRevived").replace("${player}", target.getName()));
                             player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 100, 1);
                             player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
@@ -145,7 +145,7 @@ public class Items {
                     player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 100, 1);
                 } else {
                     if (player.getMaxHealth() - 2 <= 0) {
-                        BanStorageUtil.createBan(player);
+                        BanLocalUtil.createLocalBan(player);
                     } else {
                         player.setMaxHealth(player.getMaxHealth() - 2);
                         player.sendMessage(Config.getMessage("heartLost"));

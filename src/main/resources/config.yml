@@ -3,6 +3,15 @@
 # https://ls.przemus.xyz/
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+storage-type: local
+
+mysql:
+  host: localhost
+  port: 3306
+  database: database_name
+  username: username
+  password: password
+
 heartItem:
   enabled: true
   name: "&c&lExtra Heart"

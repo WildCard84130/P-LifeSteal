@@ -3,7 +3,7 @@ package eu.vibemc.lifesteal.commands;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.OfflinePlayerArgument;
 import eu.vibemc.lifesteal.Main;
-import eu.vibemc.lifesteal.bans.BanStorageUtil;
+import eu.vibemc.lifesteal.bans.BanLocalUtil;
 import eu.vibemc.lifesteal.bans.models.Ban;
 import eu.vibemc.lifesteal.other.Config;
 import org.bukkit.OfflinePlayer;
@@ -16,7 +16,7 @@ public class BansCommands {
                 .withPermission("lifesteal.bans")
                 .executes((sender, args) -> {
                     sender.sendMessage("§6§lBans:");
-                    for (Ban ban : BanStorageUtil.findAllBans()) {
+                    for (Ban ban : BanLocalUtil.findAllLocalBans()) {
                         sender.sendMessage("§c" + Main.getInstance().getServer().getOfflinePlayer(ban.getPlayerUUID()).getName());
                     }
                 })
@@ -33,7 +33,7 @@ public class BansCommands {
                         if (player.getName() == null) {
                             sender.sendMessage(Config.getMessage("playerNotFound"));
                         } else {
-                            if (BanStorageUtil.deleteBan(player.getUniqueId())) {
+                            if (BanLocalUtil.deleteLocalBan(player.getUniqueId())) {
                                 sender.sendMessage(Config.getMessage("banRemoved").replace("${player}", player.getName()));
 
                             } else {

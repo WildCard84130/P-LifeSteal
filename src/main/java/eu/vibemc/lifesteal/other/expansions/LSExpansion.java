@@ -1,8 +1,7 @@
 package eu.vibemc.lifesteal.other.expansions;
 
 import eu.vibemc.lifesteal.Main;
-import eu.vibemc.lifesteal.bans.BanStorageUtil;
-import eu.vibemc.lifesteal.bans.models.Ban;
+import eu.vibemc.lifesteal.bans.BanLocalUtil;
 import eu.vibemc.lifesteal.other.Config;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
@@ -72,7 +71,7 @@ public class LSExpansion extends PlaceholderExpansion {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(params.substring(7));
                 // if offline player exists
                 if (offlinePlayer != null) {
-                    if (BanStorageUtil.getBan(offlinePlayer.getUniqueId()) != null) {
+                    if (BanLocalUtil.getLocalBan(offlinePlayer.getUniqueId()) != null) {
                         return ChatColor.translateAlternateColorCodes('&', Config.getString("placeholder-api.banned-text"));
                     }
                     else {

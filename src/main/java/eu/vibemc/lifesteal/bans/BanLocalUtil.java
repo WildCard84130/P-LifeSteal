@@ -14,12 +14,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class BanStorageUtil {
+public class BanLocalUtil {
 
-    private static ArrayList<Ban> bans = new ArrayList<>();
+    private static ArrayList<Ban> localBans = new ArrayList<>();
 
-    public static Ban createBan(Player player) throws IOException {
-        if (getBan(player.getUniqueId()) != null) {
+    public static Ban createLocalBan(Player player) throws IOException {
+        if (getLocalBan(player.getUniqueId()) != null) {
             return null;
         }
         Ban createdBan;
@@ -27,13 +27,13 @@ public class BanStorageUtil {
             int banTime = Config.getInt("banTime") * 60;
             long unixTime = System.currentTimeMillis() / 1000L + banTime;
             Ban ban = new Ban(player.getUniqueId(), unixTime);
-            bans.add(ban);
-            saveBans();
+            localBans.add(ban);
+            saveLocalBans();
             createdBan = ban;
         } else {
             Ban ban = new Ban(player.getUniqueId(), 5283862620L);
-            bans.add(ban);
-            saveBans();
+            localBans.add(ban);
+            saveLocalBans();
             createdBan = ban;
         }
         player.setMaxHealth(Config.getInt("reviveHeartAmount"));
@@ -52,19 +52,19 @@ public class BanStorageUtil {
     }
 
 
-    public static OfflinePlayer getOfflinePlayerByBan(Ban ban) {
+    public static OfflinePlayer getOfflinePlayerByLocalBan(Ban ban) {
         return Main.getInstance().getServer().getOfflinePlayer(ban.getPlayerUUID());
     }
 
-    public static Ban getBan(UUID uuid) throws IOException {
-        for (Ban ban : bans) {
+    public static Ban getLocalBan(UUID uuid) throws IOException {
+        for (Ban ban : localBans) {
             if (ban.getPlayerUUID().equals(uuid)) {
                 // check if ban is still valid
                 if (ban.getUnbanTime() > System.currentTimeMillis() / 1000L) {
                     return ban;
                 } else {
-                    bans.remove(ban);
-                    saveBans();
+                    localBans.remove(ban);
+                    saveLocalBans();
                     return null;
                 }
             }
@@ -72,38 +72,38 @@ public class BanStorageUtil {
         return null;
     }
 
-    public static boolean deleteBan(UUID uuid) throws IOException {
-        if (getBan(uuid) == null) {
+    public static boolean deleteLocalBan(UUID uuid) throws IOException {
+        if (getLocalBan(uuid) == null) {
             return false;
         }
-        bans.remove(getBan(uuid));
-        saveBans();
+        localBans.remove(getLocalBan(uuid));
+        saveLocalBans();
         return true;
     }
 
-    public static void saveBans() throws IOException {
+    public static void saveLocalBans() throws IOException {
         Gson gson = new Gson();
         File file = new File(Main.getInstance().getDataFolder().getAbsolutePath() + "/bans.json");
         file.getParentFile().mkdir();
         file.createNewFile();
         Writer writer = null;
         writer = new FileWriter(file, false);
-        gson.toJson(bans, writer);
+        gson.toJson(localBans, writer);
         writer.flush();
         writer.close();
     }
 
-    public static void loadBans() throws IOException {
+    public static void loadLocalBans() throws IOException {
         Gson gson = new Gson();
         File file = new File(Main.getInstance().getDataFolder().getAbsolutePath() + "/bans.json");
         if (file.exists()) {
             Reader reader = new FileReader(file);
             Ban[] b = gson.fromJson(reader, Ban[].class);
-            bans = new ArrayList<>(Arrays.asList(b));
+            localBans = new ArrayList<>(Arrays.asList(b));
         }
     }
 
-    public static List<Ban> findAllBans() {
-        return bans;
+    public static List<Ban> findAllLocalBans() {
+        return localBans;
     }
 }

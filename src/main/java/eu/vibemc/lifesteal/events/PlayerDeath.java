@@ -1,6 +1,6 @@
 package eu.vibemc.lifesteal.events;
 
-import eu.vibemc.lifesteal.bans.BanStorageUtil;
+import eu.vibemc.lifesteal.bans.BanLocalUtil;
 import eu.vibemc.lifesteal.other.Config;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -19,7 +19,7 @@ public class PlayerDeath implements Listener {
         if (Config.getBoolean("removeHeartOnlyIfKilledByPlayer")) {
             if (killer != null) {
                 if (player.getMaxHealth() - 2 <= 0) {
-                    BanStorageUtil.createBan(player);
+                    BanLocalUtil.createLocalBan(player);
                 } else {
                     // remove 2 from max health of killed player
                     player.setMaxHealth(player.getMaxHealth() - 2);
@@ -44,7 +44,7 @@ public class PlayerDeath implements Listener {
             }
         } else {
             if (player.getMaxHealth() - 2 <= 0) {
-                BanStorageUtil.createBan(player);
+                BanLocalUtil.createLocalBan(player);
             } else {
                 // remove 2 from max health of killed player
                 player.setMaxHealth(player.getMaxHealth() - 2);
