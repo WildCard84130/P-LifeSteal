@@ -9,9 +9,8 @@ heartItem:
   material: "RED_DYE"
   lore:
     - "&6Gives an extra heart!"
-    - "&7&oYou have ${chance}% to get an additional heart added."
-  loseChance: 50
-  addLimit: 0
+  loseChance: 0
+  addLimit: 40
   withdraw-enabled: true
 
 reviveBook:
@@ -24,12 +23,12 @@ reviveBook:
   skull-lore:
     - "&aPress on the head to revive."
 
-killHeartLimit: 0
+killHeartLimit: 40
 removeHeartOnlyIfKilledByPlayer: false
 banOn0Hearts: true
 broadcastBanFrom0Hearts: true
 banTime: 0
-reviveHeartAmount: 20
+reviveHeartAmount: 6
 
 
 recipe:
@@ -40,16 +39,16 @@ recipe:
       item: "extra_heart"
       shaped: true
       extraHeartItemUseSuccess: 100
-      discover: false
+      discover: true
       items:
         - "DIAMOND_BLOCK"
+        - "TOTEM_OF_UNDYING"
         - "DIAMOND_BLOCK"
-        - "DIAMOND_BLOCK"
-        - "DIAMOND_BLOCK"
+        - "NETHERITE_INGOT"
         - "NETHER_STAR"
+        - "NEHERITE_INGOT"
         - "DIAMOND_BLOCK"
-        - "DIAMOND_BLOCK"
-        - "DIAMOND_BLOCK"
+        - "TOTEM_OF_UNDYING"
         - "DIAMOND_BLOCK"
     2:
       recipe-enabled: true
@@ -57,19 +56,19 @@ recipe:
       shaped: true
       discover: true
       items:
+        - "EXTRA_HEART"
         - "TOTEM_OF_UNDYING"
+        - "EXTRA_HEART"
+        - "NETHERITE_INGOT"
+        - "ELYTRA"
+        - "NETHERITE_INGOT"
+        - "EXTRA_HEART"
         - "TOTEM_OF_UNDYING"
-        - "TOTEM_OF_UNDYING"
-        - "ENCHANTED_GOLDEN_APPLE"
-        - "BOOK"
-        - "ENCHANTED_GOLDEN_APPLE"
-        - "TOTEM_OF_UNDYING"
-        - "TOTEM_OF_UNDYING"
-        - "TOTEM_OF_UNDYING"
+        - "EXTRA_HEART"
 
 
 loot:
-  enabled: true
+  enabled: false
   worlds:
     world:
       chanceForHeartToGenerate: 50
