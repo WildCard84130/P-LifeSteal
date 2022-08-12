@@ -11,7 +11,7 @@ heartItem:
     - "&6Gives an extra heart!"
     - "&7&oYou have ${chance}% to get an additional heart added."
   loseChance: 50
-  addLimit: 0
+  addLimit: 40
   withdraw-enabled: true
 
 reviveBook:
@@ -24,12 +24,12 @@ reviveBook:
   skull-lore:
     - "&aPress on the head to revive."
 
-killHeartLimit: 0
+killHeartLimit: 40
 removeHeartOnlyIfKilledByPlayer: false
 banOn0Hearts: true
 broadcastBanFrom0Hearts: true
 banTime: 0
-reviveHeartAmount: 20
+reviveHeartAmount: 6
 
 
 recipe:
@@ -43,38 +43,38 @@ recipe:
       discover: false
       items:
         - "DIAMOND_BLOCK"
+        - "NETHERITE_INGOT"
         - "DIAMOND_BLOCK"
-        - "DIAMOND_BLOCK"
-        - "DIAMOND_BLOCK"
+        - "TOTEM_OF_UNDYING"
         - "NETHER_STAR"
+        - "TOTEM_OF_UNDYING"
         - "DIAMOND_BLOCK"
-        - "DIAMOND_BLOCK"
-        - "DIAMOND_BLOCK"
+        - "NETHERITE_INGOT"
         - "DIAMOND_BLOCK"
     2:
       recipe-enabled: true
       item: "revive_book"
       shaped: true
-      discover: true
+      discover: false
       items:
+        - "EXTRA_HEART"
         - "TOTEM_OF_UNDYING"
+        - "EXTRA_HEART"
+        - "NETHERITE_INGOT"
+        - "ELYTRA"
+        - "NETHERITE_INGOT"
+        - "EXTRA_HEART"
         - "TOTEM_OF_UNDYING"
-        - "TOTEM_OF_UNDYING"
-        - "ENCHANTED_GOLDEN_APPLE"
-        - "BOOK"
-        - "ENCHANTED_GOLDEN_APPLE"
-        - "TOTEM_OF_UNDYING"
-        - "TOTEM_OF_UNDYING"
-        - "TOTEM_OF_UNDYING"
+        - "EXTRA_HEART"
 
 
 loot:
   enabled: true
   worlds:
     world:
-      chanceForHeartToGenerate: 50
-      heartAddChance: 50
-      chanceForReviveBookToGenerate: 50
+      chanceForHeartToGenerate: 0
+      heartAddChance: 100
+      chanceForReviveBookToGenerate: 0
     world_nether:
       chanceForHeartToGenerate: 75
       heartAddChance: 75
